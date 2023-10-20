@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+/public/presensi_file
 /storage/*.key
 /vendor
 .env
