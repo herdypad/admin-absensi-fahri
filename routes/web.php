@@ -28,13 +28,13 @@ Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 // home
 Route::get('/', function () {
-    $count  = DB::table('users')->count();
-    $presensi = Presensi::where('user_id', Auth::user()->id);
-    $hadir  = Presensi::where('user_id', Auth::user()->id)->count();
-    $izin   = Presensi::where('status', 2)->count();
-    $telat  = Presensi::where('status', 3)->count();
-    $alpa   = Presensi::where('status', 4)->count();
-    $usr_id = Auth::user()->id;
+    $count  = \Illuminate\Support\Facades\DB::table('users')->count();
+    $presensi = '0';
+    $hadir  = '0';
+    $izin   = '0';
+    $telat  = '0';
+    $alpa   = '0';
+    $usr_id = \Illuminate\Support\Facades\Auth::user()->id;
 
     return view('index')->with([
         'title' => 'Admin Absensi Dosen',
