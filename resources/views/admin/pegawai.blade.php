@@ -63,6 +63,9 @@
                                                 Nama</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Email</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Jabatan</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -89,13 +92,16 @@
                                             <td class="align-middle text-center text-sm">
                                                 <span class="text-xs font-weight-bold mb-0">{{$p->name??'N/A'}}</span>
                                             </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="text-xs font-weight-bold mb-0">{{$p->email??'N/A'}}</span>
+                                            </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-xs font-weight-bold mb-0">{{$p->jabatan??'N/A'}}
                                                 </span>
                                             </td>
 
                                             <td class="align-middle text-center">
-                                                <img src="{{env('APP_URL')}}/api/file/{{$p->foto}}" alt="File Photo" class="img-thumbnail " style="width: 4rem; height: 4rem;">
+                                                <img src="{{env('APP_URL')}}/api/file/{{$p->foto ?? 'master_user.png'}}" alt="File Photo" class="img-thumbnail " style="width: 4rem; height: 4rem;">
                                             </td>
 
                                             <td class="align-middle text-center">

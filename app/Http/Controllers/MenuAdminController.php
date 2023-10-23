@@ -51,25 +51,24 @@ class MenuAdminController extends Controller
 
     public function createPegawai(Request $request)
     {
-
-//        dd($request->all());
-
         //file upload
         $file = Request()->file('foto');
-//        dd($file);
         $date = (string)date('ymdhis');
-        $fileName ='master-'. $date . $file->getClientOriginalName();         /// untuk Presensi
+        $fileName ='master-'. $request->name . "." . $file->getClientOriginalExtension();         /// untuk Presensi
         $file->move('presensi_file/', $fileName);
+
+//        dd($fileName);
 
         User::create([
             'name' => $request->name,
             'nip' => $request->nip,
             'email' => $request->email,
             'jabatan' => $request->jabatan,
-            'foto' => $fileName,
-            // default password jika admin menambahkan pegawai secara manual
-            'password' => Hash::make('password'),
+            'foto'  => $fileName,
+            'password' => Hash::make('password'), // default password jika admin menambahkan pegawai secara manual
         ]);
+
+
 
         return redirect()->route('pegawai')->with('pesan',"Penambahan Data {$request['nama']} berhasil" );
     }
@@ -91,7 +90,7 @@ class MenuAdminController extends Controller
             'no_tlp'     => $request->no_tlp,
             'alamat'     => $request->alamat,
             'jabatan_id' => $request->jabatan_id,
-            'cabang_id'  => $request->cabang_id,
+
         ]);
 
         session()->flash('pesan',"Perubahan Data {$request['nama']} berhasil");

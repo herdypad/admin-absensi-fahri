@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 'nip' => '000001',
                 'email' => 'admin@admin.com',
                 'password' => Hash::make('123456'),
+                'foto' => 'master_user.png',
                 'jabatan' => 'admin'
             ],
             [
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
                 'nip' => '11111',
                 'email' => 'user@user.com',
                 'password' => Hash::make('123456'),
+                'foto' => 'master_user.png',
                 'jabatan' => 'user'
             ],
 
