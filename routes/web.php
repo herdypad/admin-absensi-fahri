@@ -17,6 +17,11 @@ use App\Models\Presensi;
 |
 */
 
+Route::get('/', function(){
+    // url has been moved
+    return redirect('/login');
+});
+
 // auth
 Route::get('login', [AuthController::class, 'index'])->name('auth.index');
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
