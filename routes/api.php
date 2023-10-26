@@ -16,9 +16,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('clockin', [ApiPresensiController::class, 'absen']);
 
+    Route::get('whoiam', [ApiAuthController::class, 'whoIam']);
+
     Route::post('updatefoto', [ApiUserController::class, 'ajukanFoto']);
 
     Route::get('dataabsen/{id}', [ApiPresensiController::class, 'dataPresensiApi']);
+
+    Route::get('dataabsentoday/{id}', [ApiPresensiController::class, 'dataPresensiToday']);
 });
 
 

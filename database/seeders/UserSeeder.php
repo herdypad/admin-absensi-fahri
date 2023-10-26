@@ -42,6 +42,7 @@ class UserSeeder extends Seeder
                     'nip' => $row["nip"],
                     'email' => $row["email"],
                     'jabatan' => $row["jabatan"],
+                    'foto' => $row["foto"],
                     'password' => $row["password"],
                 ]);
 

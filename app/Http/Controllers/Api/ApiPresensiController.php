@@ -16,6 +16,15 @@ class ApiPresensiController extends Controller
         return new PresensiInit(true, 'Berhasil', $data);
     }
 
+    public function dataPresensiToday($id){
+        $today = date('Ymd');
+        $data = DB::table('presensis')
+            ->where('user_id', $id)
+            ->where('tgl_presensi', $today)
+            ->get();
+        return new PresensiInit(true, 'Berhasil', $data);
+    }
+
     public function absen(Request $request)
     {
 
@@ -46,7 +55,7 @@ class ApiPresensiController extends Controller
             Presensi::create([
                 'user_id' => $request->input('user_id'),
                 'tgl_presensi' => date('Y-m-d'),
-                'jam_masuk' => date('h:i:s'),
+                'jam_masuk' => date('H:i:s'),
                 'jam_pulang' => null,
                 'foto_masuk' => $fileName,
                 'foto_pulang' => '',
@@ -68,7 +77,7 @@ class ApiPresensiController extends Controller
 
             // Buat entri baru di tabel absensi
             Presensi::where('id', $data[0]->id)->update([
-                'jam_pulang' => date('h:i:s'),
+                'jam_pulang' => date('H:i:s'),
                 'foto_pulang' => $fileName,
                 'ket' => $request->input('ket'),
             ]);

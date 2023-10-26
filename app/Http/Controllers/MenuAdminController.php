@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 
 use App\Models\User;
-use App\Models\Cabang;
-use App\Models\Jabatan;
-use App\Models\Pegawai;
+
 
 class MenuAdminController extends Controller
 {
@@ -53,21 +51,24 @@ class MenuAdminController extends Controller
     {
         //file upload
         $file = Request()->file('foto');
-        $date = (string)date('ymdhis');
-        $fileName ='master-'. $request->name . "." . $file->getClientOriginalExtension();         /// untuk Presensi
+        $fileName ='master-'. $request->email . "." . $file->getClientOriginalExtension();         /// untuk Presensi
         $file->move('presensi_file/', $fileName);
 
 //        dd($fileName);
 
-        User::create([
+      $user =  User::create([
             'name' => $request->name,
             'nip' => $request->nip,
             'email' => $request->email,
             'jabatan' => $request->jabatan,
             'foto'  => $fileName,
-            'password' => Hash::make('password'), // default password jika admin menambahkan pegawai secara manual
+            'password' => Hash::make('password'),
         ]);
 
+        User::where('id', $user->id)
+            ->update([
+                'foto'       => $fileName,
+            ]);
 
 
         return redirect()->route('pegawai')->with('pesan',"Penambahan Data {$request['nama']} berhasil" );
@@ -76,21 +77,26 @@ class MenuAdminController extends Controller
 
     public function updatePegawai(Request $request, $id)
     {
+
+        //file upload
+        if (!empty(Request()->file('foto'))){
+            $file = Request()->file('foto');
+            $fileName ='master-'. $request->email . "." . $file->getClientOriginalExtension();
+            $file->move('presensi_file/', $fileName);
+
+            User::where('id', $id)
+                ->update([
+                    'foto'       => $fileName,
+                ]);
+        }
+
         User::where('id', $request->id)
         ->update([
-            'nama'       => $request->nama,
-            'email'      => $request->email,
-        ]);
-
-        Pegawai::where('user_id',$request->id)
-        ->update([
-            'nip'        => $request->nip,
-            'tgl_lahir'  => $request->tgl_lahir,
-            'j_k'        => $request->j_k,
-            'no_tlp'     => $request->no_tlp,
-            'alamat'     => $request->alamat,
-            'jabatan_id' => $request->jabatan_id,
-
+            'name' => $request->name,
+            'nip' => $request->nip,
+            'email' => $request->email,
+            'jabatan' => $request->jabatan,
+            'password' => Hash::make('password'),
         ]);
 
         session()->flash('pesan',"Perubahan Data {$request['nama']} berhasil");

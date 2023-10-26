@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pegawai;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -28,16 +29,6 @@ class AuthController extends Controller
     public function store(Request $request)
     {
 
-//        dd($request->all());
-//        $validateData = $request->validate([
-//            'name'      => 'required|min:3|max:50',
-//            'email'     => 'required|email|unique:users',
-////            'password'  => 'required|min:6|confirmed',
-////            'password_confirmation' => 'required|min:6',
-////            'nip' => 'required|numeric|unique:App\Models\User,nip'
-//        ]);
-
-//        dd($validateData['nip']);
         User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
@@ -60,11 +51,29 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('menu.home'))->with('success', 'Selamat datang kembali ' . Auth::user()->nama);
+        try {
+            $data = DB::table('users')
+                ->where('email', $request->email)
+                ->limit(1)
+                ->get();
+
+
+//        dd($data[0]->jabatan);
+
+            if ( $data[0]->jabatan != 'admin'){
+                return back()->with('error', 'Anda Bukan Admin')->onlyInput('email');
+            }
+
+            if (Auth::attempt($credentials)) {
+                $request->session()->regenerate();
+                return redirect()->intended(route('menu.home'))->with('success', 'Selamat datang kembali ' . Auth::user()->nama);
+            }
+            return back()->with('error', 'Email atau Password Salah')->onlyInput('email');
+        }catch (\Exception $e){
+            return back()->with('error', 'Email atau Password Salah'.$e)->onlyInput('email');
         }
-        return back()->with('error', 'Email atau Password Salah')->onlyInput('email');
+
+
     }
 
     public function logout()
@@ -74,4 +83,8 @@ class AuthController extends Controller
         request()->session()->regenerateToken();
         return redirect(route('auth.index'));
     }
+
+
+
+
 }

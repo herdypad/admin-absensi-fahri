@@ -141,7 +141,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('admin.createAdmin') }}" method="POST">
+                        <form action="{{ route('admin.createAdmin') }}" method="POST" >
                             @csrf
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Lengkap</label>
@@ -169,7 +169,7 @@
                 </div>
             </div>
         </div>
-        
+
         {{-- ------------------------------------------- E N D - A D D -------------------------------------------}}
 
 

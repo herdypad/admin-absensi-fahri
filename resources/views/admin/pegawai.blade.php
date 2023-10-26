@@ -199,6 +199,69 @@
 
             {{-- ------------------------------------------- E N D - A D D -------------------------------------------}}
 
+            {{---------------------------------------- E D I T ----------------------------------------}}
+
+            @foreach($pegawai as $p)
+                <div class="modal fade" id="editPegawai-{{$p->id}}" aria-labelledby="addPegawaiLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-md" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addPegawaiLabel">Edit Pegawai</h5>
+                                <button class="btn-close bg-danger" type="button" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="pegawai/update/{{ $p->id }}" enctype="multipart/form-data" method="POST">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="nip" class="form-label">Nip Lengkap</label>
+                                        <input type="text" name="nip" id="nip" class="form-control"
+                                               value="{{ old('nip') ?? $p->nip}}">
+                                        <div id="nip-feedback" class="invalid-feedback"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Nama Lengkap</label>
+                                        <input type="text" name="name" id="name" class="form-control"
+                                               value="{{ old('name') ?? $p->name}}">
+                                        <div id="name-feedback" class="invalid-feedback"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" name="email" id="email" class="form-control"
+                                               value="{{ old('email') ?? $p->email }}">
+                                        <div id="email-feedback" class="invalid-feedback"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="jabatan" class="form-label">Jabatan</label>
+                                        <input type="text" name="jabatan" id="jabatan" class="form-control"
+                                               value="{{ old('jabatan') ?? $p->jabatan }}">
+                                        <div id="jabatan-feedback" class="invalid-feedback"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="foto" class="form-label">foto</label>
+                                        <input type="file" name="foto" id="foto" class="form-control">
+                                        <div id="foto-feedback" class="invalid-feedback"></div>
+                                    </div>
+
+
+                                    <div style="float: right">
+                                        <button type="submit" class="btn btn-primary mb-2">Update</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
+            {{----------------------------------- E N D - E D I T  -----------------------------------}}
+
+
 
             {{---------------------------------------- P A S S W O R D ----------------------------------------}}
 

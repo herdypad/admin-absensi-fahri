@@ -18,11 +18,13 @@ class ApiUserController extends Controller
         $fileName ='master-'. $date . $file->getClientOriginalName();         /// untuk Presensi
         $file->move('presensi_file/', $fileName);
 
-        User::where('id', $request->id)
+        User::where('id', $request->user_id)
             ->update([
                 'foto'       => $fileName,
             ]);
         return new PresensiInit(true, 'Berhasil', "Update Berhasil");
 
     }
+
+
 }
